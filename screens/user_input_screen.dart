@@ -1,0 +1,86 @@
+import 'package:flutter/material.dart';
+import 'package:pingpass/main.dart';
+import 'package:pingpass/providers/auth_provider.dart';
+import 'package:provider/provider.dart';
+
+class UserInputScreen extends StatefulWidget {
+  const UserInputScreen({super.key});
+
+  @override
+  State<UserInputScreen> createState() => _UserInputScreenState();
+}
+
+class _UserInputScreenState extends State<UserInputScreen> {
+  final _phoneController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  void _sendOtp() {
+    if (!_formKey.currentState!.validate()) return;
+    final phone = '+91${_phoneController.text.trim()}';
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    authProvider.sendOtp(
+        phoneNumber: phone,
+        onCodeSent: () {
+          Navigator.pushNamed(context, AppRoutes.otpVerification);
+        },
+        onError: (error) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(error)),
+          );
+        });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final isLoading = context.watch<AuthProvider>().isLoading;
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Enter Phone Number'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                const Text(
+                  'Enter your mobile number',
+                  style: TextStyle(fontSize: 18),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                TextFormField(
+                  controller: _phoneController,
+                  keyboardType: TextInputType.phone,
+                  decoration: InputDecoration(
+                    prefixText: '+91',
+                    border: OutlineInputBorder(),
+                    labelText: 'Phone Number',
+                  ),
+                  maxLength: 10,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your phone number';
+                    } else if (!RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                      return 'Enter a valid 10 digit number';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(
+                  height: 24,
+                ),
+                ElevatedButton(
+                    onPressed: isLoading ? null : _sendOtp,
+                    child: isLoading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text('Sent OTP'))
+              ],
+            )),
+      ),
+    );
+  }
+}
