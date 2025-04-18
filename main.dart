@@ -1,17 +1,20 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:pingpass/screens/otp_verification_screen.dart';
+import 'package:pingpass/screens/splash_screen.dart';
 import 'package:pingpass/screens/user_input_screen.dart';
 import 'package:pingpass/screens/webview_screen.dart';
 import 'package:provider/provider.dart';
 import 'providers/auth_provider.dart';
 
 class AppRoutes {
+  static const String splash = '/splash';
   static const String phoneNumber = '/';
   static const String otpVerification = '/otp';
   static const String webView = '/webview';
 
   static final routes = {
+    splash: (context) => const SplashScreen(),
     phoneNumber: (context) => const UserInputScreen(),
     otpVerification: (context) => const OtpVerificationScreen(),
     webView: (context) => const WebviewScreen(),
@@ -37,7 +40,7 @@ class MyApp extends StatelessWidget {
       title: 'PingPass',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: AppRoutes.phoneNumber,
+      initialRoute: AppRoutes.splash,
       routes: AppRoutes.routes,
     );
   }

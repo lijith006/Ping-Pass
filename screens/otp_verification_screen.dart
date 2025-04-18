@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pingpass/main.dart';
 import 'package:pingpass/providers/auth_provider.dart';
+import 'package:pingpass/widgets/custom_appbar.dart';
+import 'package:pingpass/widgets/custom_button.dart';
+import 'package:pingpass/widgets/custom_textformfield.dart';
 import 'package:provider/provider.dart';
 
 class OtpVerificationScreen extends StatefulWidget {
@@ -37,9 +40,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
   Widget build(BuildContext context) {
     final isLoading = context.watch<AuthProvider>().isLoading;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('OTP Verification'),
-      ),
+      appBar: CustomAppBar(title: 'OTP Verification'),
       body: Padding(
         padding: EdgeInsets.all(24),
         child: Form(
@@ -53,14 +54,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
+                CustomTextField(
                   controller: _otpController,
                   keyboardType: TextInputType.number,
+                  labelText: 'OTP',
                   maxLength: 6,
-                  decoration: const InputDecoration(
-                    labelText: 'OTP',
-                    border: OutlineInputBorder(),
-                  ),
                   validator: (value) {
                     if (value == null || value.isEmpty || value.length != 6) {
                       return 'Enter valid 6-digit OTP';
@@ -71,13 +69,11 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                ElevatedButton(
-                    onPressed: isLoading ? null : _verifyOtp,
-                    child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text('Verify'))
+                CustomButton(
+                  onPressed: _verifyOtp,
+                  text: 'Verify',
+                  isLoading: isLoading,
+                ),
               ],
             )),
       ),

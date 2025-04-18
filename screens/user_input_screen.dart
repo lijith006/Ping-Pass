@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:pingpass/main.dart';
 import 'package:pingpass/providers/auth_provider.dart';
+import 'package:pingpass/widgets/custom_appbar.dart';
+import 'package:pingpass/widgets/custom_button.dart';
+import 'package:pingpass/widgets/custom_textformfield.dart';
 import 'package:provider/provider.dart';
 
 class UserInputScreen extends StatefulWidget {
@@ -34,9 +37,7 @@ class _UserInputScreenState extends State<UserInputScreen> {
   Widget build(BuildContext context) {
     final isLoading = context.watch<AuthProvider>().isLoading;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Enter Phone Number'),
-      ),
+      appBar: CustomAppBar(title: 'Login'),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(
@@ -50,14 +51,11 @@ class _UserInputScreenState extends State<UserInputScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                TextFormField(
+                CustomTextField(
                   controller: _phoneController,
                   keyboardType: TextInputType.phone,
-                  decoration: InputDecoration(
-                    prefixText: '+91',
-                    border: OutlineInputBorder(),
-                    labelText: 'Phone Number',
-                  ),
+                  labelText: 'Phone Number',
+                  prefixText: '+91',
                   maxLength: 10,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -71,13 +69,11 @@ class _UserInputScreenState extends State<UserInputScreen> {
                 const SizedBox(
                   height: 24,
                 ),
-                ElevatedButton(
-                    onPressed: isLoading ? null : _sendOtp,
-                    child: isLoading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text('Sent OTP'))
+                CustomButton(
+                  onPressed: _sendOtp,
+                  text: 'Send OTP',
+                  isLoading: isLoading,
+                ),
               ],
             )),
       ),
