@@ -23,7 +23,10 @@ class _WebviewScreenState extends State<WebviewScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: CustomAppBar(title: 'Flutter'),
+        appBar: CustomAppBar(
+          title: 'Flutter',
+          showBackButton: false,
+        ),
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: WebViewWidget(controller: _controller),

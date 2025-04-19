@@ -24,11 +24,36 @@ class _SplashScreenState extends State<SplashScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: Center(
-        child: Lottie.asset(
-          'assets/animations/splashscreen.json',
-          width: 200,
-          height: 200,
-          fit: BoxFit.contain,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Lottie.asset(
+              'assets/animations/splashscreen.json',
+              width: 250,
+              height: 250,
+              fit: BoxFit.contain,
+            ),
+            SizedBox(
+              height: 24,
+            ),
+            Text(
+              'Ping Pass',
+              style: TextStyle(
+                fontSize: 32,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).primaryColor,
+                letterSpacing: 1.2,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Secure your login with ease',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey,
+              ),
+            ),
+          ],
         ),
       ),
     );
