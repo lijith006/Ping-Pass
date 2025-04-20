@@ -1,4 +1,4 @@
-# 📱 Flutter Firebase Phone Auth App
+# 📱 Ping Pass App
 
 This is a simple Flutter application demonstrating **Phone Number Authentication** using **Firebase** along with a **Web View**. The app consists of three pages:
 
