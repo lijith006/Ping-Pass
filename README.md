@@ -30,7 +30,10 @@ State management is handled using the **Provider** package.
 
 ---
 
-## 🚀 Live Demo
+## 📱 Download the App
+
+👉 [Click here to download the APK](https://github.com/lijith006/Ping-Pass/releases/download/v1.0.0/PingPass.apk)
+
 
 
 
